@@ -1,0 +1,145 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fc;
+  margin: 0;
+  color: #333;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=60') center/cover no-repeat;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero .overlay {
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+
+.hero .btn {
+  background: #ff4757;
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.hero .btn:hover {
+  background: #e84118;
+}
+
+/* ===== POSTER GRID ===== */
+.poster-gallery {
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
+}
+
+.poster-gallery h2 {
+  color: #222;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.poster-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.poster-card {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+  cursor: pointer;
+}
+
+.poster-card:hover {
+  transform: translateY(-5px);
+}
+
+.poster-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.poster-info {
+  padding: 1rem;
+}
+
+.poster-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #1e90ff;
+}
+
+.poster-info p {
+  color: #555;
+  font-size: 0.9rem;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  background: #1e90ff;
+  color: white;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.no-story {
+  text-align: center;
+  color: #555;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+}
+
+.card-actions button {
+  border: none;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.view-btn {
+  background: #1e90ff;
+  color: white;
+}
+
+.delete-btn {
+  background: #ff4757;
+  color: white;
+}
+
+.card-actions button:hover {
+  opacity: 0.85;
+}

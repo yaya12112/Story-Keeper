@@ -1,0 +1,183 @@
+/* ====== RESET & DASAR ====== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ====== HEADER ====== */
+.simple-header {
+  background: #4a90e2;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-back {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  background: white;
+  color: #4a90e2;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-back:hover {
+  background: #f0f0f0;
+}
+
+/* ====== FORM CERITA ====== */
+.story-form {
+  background: white;
+  border-radius: 15px;
+  max-width: 550px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.story-form h2 {
+  text-align: center;
+  color: #4a90e2;
+  margin-bottom: 1.5rem;
+}
+
+.story-form input[type="text"],
+.story-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  transition: border 0.3s;
+}
+
+.story-form input:focus,
+.story-form textarea:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+/* ====== FILE BUTTONS ====== */
+.file-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.file-buttons button {
+  flex: 1;
+  background: #4a90e2;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.file-buttons button:hover {
+  background: #357ab8;
+}
+
+/* ====== PREVIEW ====== */
+.preview-media {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  object-fit: cover;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f1f1;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 15px;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+/* ====== BUTTON ====== */
+#saveStory,
+.btn-secondary {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+#saveStory {
+  background: #4a90e2;
+  color: white;
+  transition: background 0.3s;
+}
+
+#saveStory:hover {
+  background: #357ab8;
+}
+
+.btn-secondary {
+  background: #eee;
+  color: #4a90e2;
+  border: 1px solid #4a90e2;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: #4a90e2;
+  color: white;
+}
+
+/* ====== FOOTER ====== */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #4a90e2;
+  color: white;
+  font-size: 14px;
+  margin-top: 2rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 600px) {
+  .story-form {
+    width: 90%;
+    padding: 1rem;
+  }
+
+  .file-buttons {
+    flex-direction: column;
+  }
+
+  .file-buttons button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Cerita | Story Keeper</title>
+  <link rel="stylesheet" href="styel-submit.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="simple-header">
+    <a href="home.html" class="btn-back">← Kembali</a>
+    <h1>Tulis Cerita Baru</h1>
+  </header>
+
+  <!-- FORM CERITA -->
+  <main>
+    <section class="story-form">
+      <h2>Tulis Ceritamu</h2>
+      <input type="text" id="storyTitle" placeholder="Judul cerita..." required>
+      <textarea id="storyContent" rows="6" placeholder="Tulis ceritamu di sini..." required></textarea>
+
+      <!-- Tombol Upload -->
+      <div class="file-buttons">
+        <button id="btnImage">📸 Tambah Gambar</button>
+        <input type="file" id="storyImage" accept="image/*" hidden>
+
+        <button id="btnVideo">🎬 Tambah Video</button>
+        <input type="file" id="storyVideo" accept="video/*" hidden>
+      </div>
+
+      <!-- Tombol Upload Dokumen -->
+      <div class="file-buttons">
+        <button id="btnFile">📄 Tambah File (PDF/DOC)</button>
+        <input type="file" id="storyFile" accept=".pdf,.doc,.docx,.txt" hidden>
+      </div>
+
+      <!-- Preview File -->
+      <div id="previewContainer"></div>
+
+      <button id="saveStory">💾 Simpan Cerita</button>
+      <button id="backHome" class="btn-secondary">🏠 Kembali ke Beranda</button>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Story Keeper</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    const saveBtn = document.getElementById('saveStory');
+    const backHomeBtn = document.getElementById('backHome');
+
+    const imgInput = document.getElementById('storyImage');
+    const vidInput = document.getElementById('storyVideo');
+    const fileInput = document.getElementById('storyFile');
+
+    const btnImage = document.getElementById('btnImage');
+    const btnVideo = document.getElementById('btnVideo');
+    const btnFile = document.getElementById('btnFile');
+
+    const previewContainer = document.getElementById('previewContainer');
+
+    // Konversi ke Base64
+    function toBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
+    }
+
+    // Preview media
+    function showPreview(file, type) {
+      previewContainer.innerHTML = ""; // Kosongkan sebelumnya
+      if (type === "image") {
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.classList.add("preview-media");
+        previewContainer.appendChild(img);
+      } else if (type === "video") {
+        const video = document.createElement("video");
+        video.src = URL.createObjectURL(file);
+        video.controls = true;
+        video.classList.add("preview-media");
+        previewContainer.appendChild(video);
+      } else if (type === "file") {
+        const fileBox = document.createElement("div");
+        fileBox.classList.add("file-preview");
+        fileBox.innerHTML = `📄 <b>${file.name}</b>`;
+        previewContainer.appendChild(fileBox);
+      }
+    }
+
+    // Klik tombol = buka file picker
+    btnImage.addEventListener("click", () => imgInput.click());
+    btnVideo.addEventListener("click", () => vidInput.click());
+    btnFile.addEventListener("click", () => fileInput.click());
+
+    imgInput.addEventListener("change", (e) => {
+      if (e.target.files[0]) showPreview(e.target.files[0], "image");
+    });
+    vidInput.addEventListener("change", (e) => {
+      if (e.target.files[0]) showPreview(e.target.files[0], "video");
+    });
+    fileInput.addEventListener("change", (e) => {
+      if (e.target.files[0]) showPreview(e.target.files[0], "file");
+    });
+
+    // Simpan Cerita
+    async function saveStory() {
+      const title = document.getElementById('storyTitle').value.trim();
+      const content = document.getElementById('storyContent').value.trim();
+      const imageFile = imgInput.files[0];
+      const videoFile = vidInput.files[0];
+      const docFile = fileInput.files[0];
+
+      if (!title || !content) {
+        alert("Judul dan isi cerita harus diisi!");
+        return;
+      }
+
+      let imageData = null;
+      let videoData = null;
+      let fileData = null;
+      let fileName = null;
+
+      if (imageFile) imageData = await toBase64(imageFile);
+      if (videoFile) videoData = await toBase64(videoFile);
+      if (docFile) {
+        fileData = await toBase64(docFile);
+        fileName = docFile.name;
+      }
+
+      const stories = JSON.parse(localStorage.getItem('stories')) || [];
+      stories.push({ title, content, image: imageData, video: videoData, file: fileData, fileName });
+      localStorage.setItem('stories', JSON.stringify(stories));
+
+      alert("Cerita berhasil disimpan!");
+      window.location.href = "home.html";
+    }
+
+    saveBtn.addEventListener('click', saveStory);
+    backHomeBtn.addEventListener('click', () => window.location.href = "home.html");
+
+    // Mode Edit
+    const editIndex = localStorage.getItem("editIndex");
+    if (editIndex !== null) {
+      const stories = JSON.parse(localStorage.getItem("stories")) || [];
+      const story = stories[editIndex];
+      if (story) {
+        document.getElementById('storyTitle').value = story.title;
+        document.getElementById('storyContent').value = story.content;
+      }
+    }
+  </script>
+</body>
+</html>

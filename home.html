@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Keeper - Ceritamu, Duniamu</title>
+  <link rel="stylesheet" href="style-home.css">
+</head>
+<body>
+  <!-- HEADER / HERO -->
+  <header class="hero">
+    <div class="overlay">
+      <h1>Story Keeper</h1>
+      <p>Tempat Cerita Hidup Seperti Film</p>
+      <a href="submit.html" class="btn">+ Tambahkan Cerita</a>
+    </div>
+  </header>
+
+  <!-- DAFTAR CERITA -->
+  <main>
+    <section class="poster-gallery">
+      <h2>Cerita Terbaru</h2>
+      <div id="posterContainer" class="poster-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Story Keeper | Dibuat oleh Nur Hidayat</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    function loadStories() {
+      const container = document.getElementById('posterContainer');
+      container.innerHTML = "";
+
+      // Ambil data dari localStorage dengan aman
+      let stories = [];
+      try {
+        stories = JSON.parse(localStorage.getItem('stories')) || [];
+      } catch (e) {
+        console.error("Data stories rusak, reset ulang:", e);
+        localStorage.removeItem('stories');
+        stories = [];
+      }
+
+      if (stories.length === 0) {
+        container.innerHTML = `
+          <p class="no-story">
+            Belum ada cerita. <a href="submit.html">Buat cerita pertama!</a>
+          </p>`;
+        return;
+      }
+
+      // tampilkan dari cerita terbaru
+      stories.slice().reverse().forEach((story, index) => {
+        const realIndex = stories.length - 1 - index; // urutan asli
+        const card = document.createElement('div');
+        card.className = 'poster-card';
+        const imgSrc = story.image || 'https://via.placeholder.com/400x250?text=No+Image';
+
+        card.innerHTML = `
+          <div class="poster-image">
+            <img src="${imgSrc}" alt="poster">
+          </div>
+          <div class="poster-info">
+            <h3>${story.title}</h3>
+            <p>${story.content.substring(0, 80)}...</p>
+            <div class="card-actions">
+              <button class="view-btn" onclick="viewStory(${realIndex})">👁️ Lihat</button>
+              <button class="edit-btn" onclick="editStory(${realIndex})">✏️ Edit</button>
+              <button class="delete-btn" onclick="deleteStory(${realIndex})">🗑️ Hapus</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function deleteStory(index) {
+      if (confirm("Apakah kamu yakin ingin menghapus cerita ini?")) {
+        const stories = JSON.parse(localStorage.getItem('stories')) || [];
+        stories.splice(index, 1);
+        localStorage.setItem('stories', JSON.stringify(stories));
+        loadStories();
+      }
+    }
+
+    function viewStory(index) {
+      const stories = JSON.parse(localStorage.getItem('stories')) || [];
+      const story = stories[index];
+      if (!story) return alert("Cerita tidak ditemukan!");
+
+      let media = "";
+      if (story.image) media += `<img src="${story.image}" alt="Gambar Cerita">`;
+      if (story.video) media += `<video src="${story.video}" controls></video>`;
+
+      const newWindow = window.open("", "_blank");
+      newWindow.document.write(`
+        <html>
+        <head>
+          <title>${story.title}</title>
+          <style>
+            body { font-family: Arial; background: #f9f9f9; padding: 20px; line-height: 1.6; }
+            h1 { color: #1e90ff; }
+            img, video { max-width: 100%; border-radius: 10px; margin: 15px 0; }
+          </style>
+        </head>
+        <body>
+          <h1>${story.title}</h1>
+          ${media}
+          <p>${story.content}</p>
+      `);
+    }
+
+    function editStory(index) {
+      // Simpan index yang ingin diedit ke localStorage
+      localStorage.setItem("editIndex", index);
+      window.location.href = "submit.html";
+    }
+
+    // Jalankan setelah semua elemen dimuat
+    document.addEventListener("DOMContentLoaded", loadStories);
+  </script>
+</body>
+</html>
