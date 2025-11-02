@@ -9,7 +9,7 @@
 <body>
   <!-- HEADER -->
   <header class="simple-header">
-    <a href="home.html" class="btn-back">← Kembali</a>
+    <a href="index.html" class="btn-back">← Kembali</a>
     <h1>Tulis Cerita Baru</h1>
   </header>
 
@@ -140,7 +140,7 @@
       localStorage.setItem('stories', JSON.stringify(stories));
 
       alert("Cerita berhasil disimpan!");
-      window.location.href = "home.html";
+      window.location.href = "index.html";
     }
 
     saveBtn.addEventListener('click', saveStory);
